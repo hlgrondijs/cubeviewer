@@ -46,7 +46,7 @@ export default function Sidebar({
   onCollapse,
 }: SidebarProps) {
   return (
-    <aside className="w-full md:w-56 shrink-0 border-r border-zinc-200 dark:border-zinc-800 px-4 py-4 md:px-3 md:py-2 flex flex-col gap-5 md:gap-4 h-screen md:sticky md:top-0 overflow-y-auto bg-white dark:bg-zinc-950">
+    <aside className="w-full md:w-56 shrink-0 border-r border-zinc-200 dark:border-zinc-800 px-4 py-4 pb-16 md:pb-2 md:px-3 md:py-2 flex flex-col gap-5 md:gap-4 h-screen md:sticky md:top-0 overflow-y-auto bg-white dark:bg-zinc-950">
       <div className="flex items-center justify-between">
         <span className="text-sm md:text-xs font-medium text-zinc-500 dark:text-zinc-400">
           Viewing {cardCount}/{Object.values(colorCounts).reduce((a, b) => a + b, 0)} cards
