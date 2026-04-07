@@ -8,6 +8,8 @@ export type Card = {
   type: string;
   typeLine: string;
   oracleText: string;
+  power: string | null;
+  toughness: string | null;
   colors: string[];
   colorIdentity: string[];
   imageUrl: string;

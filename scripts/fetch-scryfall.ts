@@ -17,6 +17,8 @@ type ScryfallCard = {
   cmc: number;
   type_line: string;
   oracle_text?: string;
+  power?: string;
+  toughness?: string;
   colors?: string[];
   color_identity: string[];
   image_uris?: { normal: string; small: string };
@@ -128,6 +130,8 @@ async function main() {
     type: extractType(card.type_line),
     typeLine: card.type_line,
     oracleText: card.oracle_text ?? "",
+    power: card.power ?? null,
+    toughness: card.toughness ?? null,
     colors: card.colors ?? [],
     colorIdentity: card.color_identity,
     imageUrl: getImageUrl(card),
