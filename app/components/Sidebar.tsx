@@ -21,6 +21,10 @@ type SidebarProps = {
   onTypeToggle: (type: string) => void;
   colorCounts: Record<string, number>;
   typeCounts: Record<string, number>;
+  selectedCmcs: number[];
+  onCmcToggle: (cmc: number) => void;
+  cmcCounts: Record<number, number>;
+  cmcValues: number[];
   cardCount: number;
 };
 
@@ -33,6 +37,10 @@ export default function Sidebar({
   onTypeToggle,
   colorCounts,
   typeCounts,
+  selectedCmcs,
+  onCmcToggle,
+  cmcCounts,
+  cmcValues,
   cardCount,
 }: SidebarProps) {
   return (
@@ -96,6 +104,32 @@ export default function Sidebar({
               {type} ({typeCounts[type] ?? 0})
             </button>
           ))}
+        </div>
+      </div>
+      <div>
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-zinc-500 dark:text-zinc-400 mb-2">
+          CMC
+        </h2>
+        <div className="flex flex-wrap gap-1.5">
+          {cmcValues.map((cmc) => {
+            const active = selectedCmcs.includes(cmc);
+            return (
+              <button
+                key={cmc}
+                onClick={() => onCmcToggle(cmc)}
+                className={`flex flex-col items-center min-w-9 px-2 py-1.5 rounded-lg text-xs font-medium transition-colors cursor-pointer border ${
+                  active
+                    ? "bg-zinc-800 text-white border-zinc-800 dark:bg-zinc-200 dark:text-zinc-900 dark:border-zinc-200"
+                    : "bg-zinc-50 text-zinc-700 border-zinc-200 hover:border-zinc-400 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700 dark:hover:border-zinc-500"
+                }`}
+              >
+                <span className="text-sm font-semibold leading-tight">{cmc}</span>
+                <span className={`text-[10px] leading-tight ${active ? "text-zinc-300 dark:text-zinc-500" : "text-zinc-400 dark:text-zinc-500"}`}>
+                  {cmcCounts[cmc] ?? 0}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </aside>

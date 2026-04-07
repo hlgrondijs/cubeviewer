@@ -23,6 +23,7 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedCmcs, setSelectedCmcs] = useState<number[]>([]);
   const [cmcDesc, setCmcDesc] = useState(false);
 
   const filtered = useMemo(() => {
@@ -38,6 +39,9 @@ export default function Home() {
         if (selectedTypes.length > 0 && !selectedTypes.includes(card.type)) {
           return false;
         }
+        if (selectedCmcs.length > 0 && !selectedCmcs.includes(card.cmc)) {
+          return false;
+        }
         return true;
       })
       .sort((a, b) => {
@@ -47,7 +51,7 @@ export default function Home() {
         if (cmcDiff !== 0) return cmcDiff;
         return a.name.localeCompare(b.name);
       });
-  }, [search, selectedColors, selectedTypes, cmcDesc]);
+  }, [search, selectedColors, selectedTypes, selectedCmcs, cmcDesc]);
 
   const colorCounts = useMemo(() => {
     const counts: Record<string, number> = {};
@@ -66,6 +70,19 @@ export default function Home() {
     return counts;
   }, []);
 
+  const cmcCounts = useMemo(() => {
+    const counts: Record<number, number> = {};
+    for (const card of cube) {
+      counts[card.cmc] = (counts[card.cmc] ?? 0) + 1;
+    }
+    return counts;
+  }, []);
+
+  const cmcValues = useMemo(
+    () => Object.keys(cmcCounts).map(Number).sort((a, b) => a - b),
+    [cmcCounts],
+  );
+
   function toggleColor(color: string) {
     setSelectedColors((prev) =>
       prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
@@ -75,6 +92,12 @@ export default function Home() {
   function toggleType(type: string) {
     setSelectedTypes((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type]
+    );
+  }
+
+  function toggleCmc(cmc: number) {
+    setSelectedCmcs((prev) =>
+      prev.includes(cmc) ? prev.filter((c) => c !== cmc) : [...prev, cmc]
     );
   }
 
@@ -89,6 +112,10 @@ export default function Home() {
         onTypeToggle={toggleType}
         colorCounts={colorCounts}
         typeCounts={typeCounts}
+        selectedCmcs={selectedCmcs}
+        onCmcToggle={toggleCmc}
+        cmcCounts={cmcCounts}
+        cmcValues={cmcValues}
         cardCount={filtered.length}
       />
       <main className="flex-1 overflow-auto">
