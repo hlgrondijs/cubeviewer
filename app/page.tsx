@@ -181,7 +181,7 @@ export default function Home() {
           />
         </div>
       )}
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1">
         <header className="border-b border-zinc-200 dark:border-zinc-800 px-4 py-3 flex items-center justify-between sticky top-0 z-10 bg-white dark:bg-zinc-950">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-full overflow-hidden shrink-0">
