@@ -26,10 +26,10 @@ export default function Home() {
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
   const [selectedCmcs, setSelectedCmcs] = useState<number[]>([]);
   const [cmcDesc, setCmcDesc] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    if (window.innerWidth < 768) setSidebarOpen(false);
+    if (window.innerWidth >= 768) setSidebarOpen(true);
   }, []);
 
   useEffect(() => {
