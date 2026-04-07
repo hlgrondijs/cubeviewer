@@ -67,7 +67,7 @@ export default function Sidebar({
           type="text"
           value={search}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Card name..."
+          placeholder="Card text..."
           className="w-full rounded border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-3 py-2 md:px-2 md:py-1 text-sm md:text-xs focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>

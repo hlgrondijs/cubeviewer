@@ -47,7 +47,7 @@ export default function Home() {
   const filtered = useMemo(() => {
     return cube
       .filter((card) => {
-        if (search && !card.name.toLowerCase().includes(search.toLowerCase())) {
+        if (search && !card.name.toLowerCase().includes(search.toLowerCase()) && !(card.oracleText || "").toLowerCase().includes(search.toLowerCase())) {
           return false;
         }
         if (selectedColors.length > 0) {
@@ -85,28 +85,28 @@ export default function Home() {
 
   const colorCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    for (const card of cube) {
+    for (const card of filtered) {
       const cat = getColorCategory(card.colors);
       counts[cat] = (counts[cat] ?? 0) + 1;
     }
     return counts;
-  }, []);
+  }, [filtered]);
 
   const typeCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    for (const card of cube) {
+    for (const card of filtered) {
       counts[card.type] = (counts[card.type] ?? 0) + 1;
     }
     return counts;
-  }, []);
+  }, [filtered]);
 
   const cmcCounts = useMemo(() => {
     const counts: Record<number, number> = {};
-    for (const card of cube) {
+    for (const card of filtered) {
       counts[card.cmc] = (counts[card.cmc] ?? 0) + 1;
     }
     return counts;
-  }, []);
+  }, [filtered]);
 
   const cmcValues = useMemo(
     () => Object.keys(cmcCounts).map(Number).sort((a, b) => a - b),
@@ -214,7 +214,7 @@ export default function Home() {
                   CMC {cmcDesc ? "\u2193" : "\u2191"}
                 </button>
                 <button
-                  onClick={() => { setPowerSort((v) => v === null ? "desc" : v === "desc" ? "asc" : null); setSortMenuOpen(false); }}
+                  onClick={() => { setPowerSort((v) => v === null ? "desc" : v === "desc" ? "asc" : null); setToughnessSort(null); setSortMenuOpen(false); }}
                   className={`text-left text-sm px-3 py-1.5 rounded-md transition-colors ${
                     powerSort ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
                   }`}
@@ -222,7 +222,7 @@ export default function Home() {
                   Power {powerSort === "asc" ? "\u2191" : powerSort === "desc" ? "\u2193" : ""}
                 </button>
                 <button
-                  onClick={() => { setToughnessSort((v) => v === null ? "desc" : v === "desc" ? "asc" : null); setSortMenuOpen(false); }}
+                  onClick={() => { setToughnessSort((v) => v === null ? "desc" : v === "desc" ? "asc" : null); setPowerSort(null); setSortMenuOpen(false); }}
                   className={`text-left text-sm px-3 py-1.5 rounded-md transition-colors ${
                     toughnessSort ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900" : "hover:bg-zinc-100 dark:hover:bg-zinc-800"
                   }`}
